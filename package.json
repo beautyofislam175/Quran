@@ -4,9 +4,9 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "preview": "vinxi preview",
+    "dev": "npx vinxi dev",
+    "build": "npx vinxi build",
+    "preview": "npx vinxi preview",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
