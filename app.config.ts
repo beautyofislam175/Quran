@@ -1,20 +1,43 @@
-import { defineConfig } from "@tanstack/react-start/config";
+import { createApp } from "vinxi";
+import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 
-export default defineConfig({
-  tsr: {
-    appDirectory: "./src",
+const sharedPlugins = () => [
+  TanStackRouterVite({
+    target: "react",
+    autoCodeSplitting: true,
     routesDirectory: "./src/routes",
     generatedRouteTree: "./src/routeTree.gen.ts",
-  },
-  vite: {
-    plugins: [tailwindcss(), tsConfigPaths()],
-  },
-  server: {
-    // Render sets NITRO_PRESET=node-server; Nitro reads it automatically.
-    // Explicit fallback keeps local builds working without the env var.
-    preset: (process.env.NITRO_PRESET as "node-server") ?? "node-server",
-    entry: "./src/server.ts",
-  },
+  }),
+  react(),
+  tailwindcss(),
+  tsConfigPaths(),
+];
+
+export default createApp({
+  routers: [
+    {
+      name: "public",
+      type: "static",
+      dir: "./public",
+      base: "/",
+    },
+    {
+      name: "ssr",
+      type: "http",
+      entry: "./src/server.ts",
+      target: "server",
+      plugins: sharedPlugins,
+    },
+    {
+      name: "client",
+      type: "client",
+      entry: "./src/client.tsx",
+      target: "browser",
+      base: "/_build/",
+      plugins: sharedPlugins,
+    },
+  ],
 });
