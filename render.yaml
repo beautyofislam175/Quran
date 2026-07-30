@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: noor-quran
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci && npm run build
+    startCommand: node .output/server/index.mjs
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NITRO_PRESET
+        value: node-server
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
