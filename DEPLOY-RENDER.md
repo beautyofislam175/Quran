@@ -20,7 +20,7 @@ This is a TanStack Start (Vite + Nitro) SSR app. It must be deployed as a
 |---|---|
 | Environment | **Node** |
 | Node version | **20** (`.nvmrc` is included) |
-| Build command | `npm ci && npm run build` |
+| Build command | `npm install && npm run build` |
 | Start command | `node .output/server/index.mjs` |
 | Health check path | `/` |
 
@@ -39,7 +39,7 @@ This is a TanStack Start (Vite + Nitro) SSR app. It must be deployed as a
 ## Local smoke-test before pushing
 
 ```bash
-npm ci
+npm install
 NITRO_PRESET=node-server npm run build
 node .output/server/index.mjs
 # open http://localhost:3000
